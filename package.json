@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "exemplo de node com clean arch",
   "main": "index.js",
-  
+
   "devDependencies": {
     "husky": "^8.0.1",
     "jest": "^28.1.1",
