@@ -9,8 +9,12 @@
     "lint-staged": "^13.0.0",
     "standard": "^17.0.0"
   },
+  "standard":{
+    "env": ["jest"]
+  },
   "scripts": {
-    "test": "jest",
+    "test": "jest --watchAll",
+    "test:staged": "jest",
     "prepare": "husky install"
   }
 }

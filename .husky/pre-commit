@@ -2,4 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npx standard --fix
-echo 'standard runned'
+echo 'standard passed'
+npm run test:staged
+echo 'test passed'
