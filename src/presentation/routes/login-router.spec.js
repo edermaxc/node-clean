@@ -120,4 +120,17 @@ describe('Login Router', () => {
     expect(httpResponse.statusCode).toBe(200)
     expect(httpResponse.body.accessToken).toEqual(authUseCase.accessToken)
   })
+
+  test('Should return 500 when AuthuseCase throws', () => {
+    class AuthUseCaseSpy {
+      auth () {
+        throw new Error()
+      }
+    }
+    const authUseCase = new AuthUseCaseSpy()
+    const sut = new LoginRouter(authUseCase)
+    const httpRequest = { }
+    const httpResponse = sut.route(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+  })
 })
