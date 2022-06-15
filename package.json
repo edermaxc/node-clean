@@ -25,6 +25,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "validator": "^13.7.0"
   }
 }
