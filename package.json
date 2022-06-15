@@ -17,6 +17,7 @@
   "scripts": {
     "test": "jest --watch --silent",
     "test:all": "jest --watchAll",
+    "test:ci": "jest --coverage",
     "test:staged": "jest",
     "prepare": "husky install"
   },
