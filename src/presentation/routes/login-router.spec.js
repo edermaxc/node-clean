@@ -191,4 +191,18 @@ describe('Login Router', () => {
     const httpResponse = await sut.route(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
   })
+
+  test('Should return 500 when EmailValidator throws', async () => {
+    class EmailValidatorSpy {
+      async auth () {
+        throw new Error()
+      }
+    }
+    const authUseCase = makeAuthUseCase()
+    const emailValidator = new EmailValidatorSpy()
+    const sut = new LoginRouter(authUseCase, emailValidator)
+    const httpRequest = { }
+    const httpResponse = await sut.route(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+  })
 })
