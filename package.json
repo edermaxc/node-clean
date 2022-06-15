@@ -16,8 +16,10 @@
   },
   "scripts": {
     "test": "jest --passWithNoTests --silent --colors --noStackTrace",
-    "test:unit": "npm test -- --watch",
-    "test:all": "npm test -- --watchAll",
+    "test:unit": "npm test -- --watch -c jest-unit-config.js",
+    "test:integration": "npm test -- --watch -c jest-integration-config.js",
+    "test:unitall": "npm test -- --watchAll -c jest-unit-config.js",
+    "test:integrationall": "npm test -- --watchAll -c jest-integration-config.js",
     "test:ci": "npm test -- --coverage",
     "test:staged": "npm test",
     "prepare": "husky install"
