@@ -18,7 +18,7 @@
     "test": "jest --watch --silent --colors --noStackTrace",
     "test:all": "jest --watchAll --silent --colors --noStackTrace",
     "test:ci": "jest --coverage --silent --noStackTrace",
-    "test:staged": "jest --silent --noStackTrace",
+    "test:staged": "jest --silent --noStackTrace --passWithNoTests",
     "prepare": "husky install"
   },
   "dependencies": {
