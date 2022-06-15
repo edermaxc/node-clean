@@ -15,10 +15,11 @@
     ]
   },
   "scripts": {
-    "test": "jest --watch --silent --colors --noStackTrace",
-    "test:all": "jest --watchAll --silent --colors --noStackTrace",
-    "test:ci": "jest --coverage --silent --noStackTrace",
-    "test:staged": "jest --silent --noStackTrace --passWithNoTests",
+    "test": "jest --passWithNoTests --silent --colors --noStackTrace",
+    "test:unit": "npm test -- --watch",
+    "test:all": "npm test -- --watchAll",
+    "test:ci": "npm test -- --coverage",
+    "test:staged": "npm test",
     "prepare": "husky install"
   },
   "dependencies": {
