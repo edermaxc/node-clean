@@ -17,7 +17,7 @@
   "scripts": {
     "test": "jest --watch --silent",
     "test:all": "jest --watchAll",
-    "test:staged": "jest --passWithNoTests --findRelatedTests --silent",
+    "test:staged": "jest",
     "prepare": "husky install"
   },
   "dependencies": {
