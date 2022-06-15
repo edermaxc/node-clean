@@ -25,6 +25,7 @@ const makeAuthUseCase = () => {
 const makeEmailValidator = () => {
   class EmailValidatorSpy {
     isValid (email) {
+      this.email = email
       return this.isEmailValid
     }
   }
@@ -204,5 +205,17 @@ describe('Login Router', () => {
     const httpRequest = { }
     const httpResponse = await sut.route(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
+  })
+
+  test('Shuold call EmailValidator with corect email', async () => {
+    const { sut, emailValidator } = makeSut()
+    const httpRequest = {
+      body: {
+        email: 'any_email@email.com',
+        password: 'any_pass'
+      }
+    }
+    await sut.route(httpRequest)
+    expect(emailValidator.email).toBe(httpRequest.body.email)
   })
 })
