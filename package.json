@@ -15,10 +15,10 @@
     ]
   },
   "scripts": {
-    "test": "jest --watch --silent",
-    "test:all": "jest --watchAll",
-    "test:ci": "jest --coverage",
-    "test:staged": "jest",
+    "test": "jest --watch --silent --colors --noStackTrace",
+    "test:all": "jest --watchAll --silent --colors --noStackTrace",
+    "test:ci": "jest --coverage --silent --noStackTrace",
+    "test:staged": "jest --silent --noStackTrace",
     "prepare": "husky install"
   },
   "dependencies": {
