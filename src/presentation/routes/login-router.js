@@ -1,6 +1,6 @@
 const uuid = require('uuid')
 const httpResponse = require('../helper/response/http-response')
-const { MissingParamError, InvalidParamError } = require('../helper/error')
+const { MissingParamError, InvalidParamError } = require('../../utils/error')
 
 module.exports = class LoginRouter {
   constructor (authUseCase, emailValidator) {
