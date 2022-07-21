@@ -1,13 +1,24 @@
 const jwt = require('jsonwebtoken')
+const MissingParamError = require('../error/missing-param-error')
 
 class TokenGenerator {
+  constructor (secret) {
+    this.secret = secret
+  }
+
   async generate (id) {
-    return jwt.sign(id, 'secret')
+    if (!this.secret) {
+      throw new MissingParamError('secret')
+    }
+    if (!id) {
+      throw new MissingParamError('id')
+    }
+    return jwt.sign(id, this.secret)
   }
 }
 
 const makeSut = () => {
-  return new TokenGenerator()
+  return new TokenGenerator('secret_key')
 }
 
 describe('Token Generator', () => {
@@ -17,12 +28,29 @@ describe('Token Generator', () => {
     const token = await sut.generate('any_id')
     expect(token).toBeNull()
   })
-})
 
-describe('Token Generator', () => {
   test('Should return a token if JWT returns a token', async () => {
     const sut = makeSut()
     const token = await sut.generate('any_id')
     expect(token).toBe(jwt.token)
+  })
+
+  test('Should call JWT with correct values', async () => {
+    const sut = makeSut()
+    await sut.generate('any_id')
+    expect(jwt.id).toBe('any_id')
+    expect(jwt.key).toBe(sut.secret)
+  })
+
+  test('Should throw if no id are provided', async () => {
+    const sut = makeSut()
+    const promise = sut.generate()
+    expect(promise).rejects.toThrow(new MissingParamError('id'))
+  })
+
+  test('Should throw if no secret are provided', async () => {
+    const sut = new TokenGenerator()
+    const promise = sut.generate('any_id')
+    expect(promise).rejects.toThrow(new MissingParamError('secret'))
   })
 })
