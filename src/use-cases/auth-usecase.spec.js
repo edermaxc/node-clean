@@ -60,6 +60,15 @@ const makeEncrypterSpy = () => {
   return encrypterSpy
 }
 
+const makeUpdateAccessTokenRepositoryWithError = () => {
+  class UpdateAccessTokenRepositorySpy {
+    async update () {
+      throw new Error()
+    }
+  }
+  return new UpdateAccessTokenRepositorySpy()
+}
+
 const makeEncrypterWithError = () => {
   class EncrypterSpy {
     async compare (string, hash) {
@@ -166,21 +175,32 @@ describe('Auth UseCase', () => {
     const loadUserByEmailRepositoryError = makeLoadUserByEmailRepositoryWithError()
     const encrypterError = makeEncrypterWithError()
     const tokenGeneratorError = makeTokenGeneratorWithError()
+    const updateAccessTokenRepository = makeUpdateAccessTokenRepositorySpy()
+    const updateAccessTokenRepositoryError = makeUpdateAccessTokenRepositoryWithError()
     const suts = [].concat(
       new AuthUseCase({
         loadUserByEmailRepository: loadUserByEmailRepositoryError,
         encrypter,
-        tokenGenerator
+        tokenGenerator,
+        updateAccessTokenRepository
       }),
       new AuthUseCase({
         loadUserByEmailRepository,
         encrypter: encrypterError,
-        tokenGenerator
+        tokenGenerator,
+        updateAccessTokenRepository
       }),
       new AuthUseCase({
         loadUserByEmailRepository,
         encrypter,
-        tokenGenerator: tokenGeneratorError
+        tokenGenerator: tokenGeneratorError,
+        updateAccessTokenRepository
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository,
+        encrypter,
+        tokenGenerator,
+        updateAccessTokenRepository: updateAccessTokenRepositoryError
       })
     )
     for (const sut of suts) {
@@ -194,132 +214,251 @@ describe('Auth UseCase', () => {
     const loadUserByEmailRepository = makeLoadUserByEmailRepositorySpy()
     const encrypter = makeEncrypterSpy()
     const tokenGenerator = makeTokenGeneratorSpy()
+    const updateAccessTokenRepository = makeUpdateAccessTokenRepositorySpy()
     const suts = [].concat(
       new AuthUseCase(),
       new AuthUseCase({
         loadUserByEmailRepository: null,
         encrypter: null,
-        tokenGenerator: null
+        tokenGenerator: null,
+        updateAccessTokenRepository: null
       }),
       new AuthUseCase({
         loadUserByEmailRepository: invalid,
         encrypter: null,
-        tokenGenerator: null
+        tokenGenerator: null,
+        updateAccessTokenRepository: null
+
       }),
       new AuthUseCase({
         loadUserByEmailRepository: null,
         encrypter: invalid,
-        tokenGenerator: null
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository: null,
-        encrypter: null,
-        tokenGenerator: invalid
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository: invalid,
-        encrypter: invalid,
-        tokenGenerator: null
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository: invalid,
-        encrypter: null,
-        tokenGenerator: invalid
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository: null,
-        encrypter: invalid,
-        tokenGenerator: invalid
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository,
-        encrypter: null,
-        tokenGenerator: null
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository,
-        encrypter: invalid,
-        tokenGenerator: null
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository,
-        encrypter: null,
-        tokenGenerator: invalid
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository,
-        encrypter: invalid,
-        tokenGenerator: invalid
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository: null,
-        encrypter,
-        tokenGenerator: null
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository: invalid,
-        encrypter,
-        tokenGenerator: null
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository: null,
-        encrypter,
-        tokenGenerator: invalid
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository: invalid,
-        encrypter,
-        tokenGenerator: invalid
+        tokenGenerator: null,
+        updateAccessTokenRepository: null
       }),
       new AuthUseCase({
         loadUserByEmailRepository: null,
         encrypter: null,
-        tokenGenerator
+        tokenGenerator: invalid,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: null,
+        encrypter: null,
+        tokenGenerator: null,
+        updateAccessTokenRepository: invalid
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: invalid,
+        encrypter: invalid,
+        tokenGenerator: null,
+        updateAccessTokenRepository: null
+
       }),
       new AuthUseCase({
         loadUserByEmailRepository: invalid,
         encrypter: null,
-        tokenGenerator
+        tokenGenerator: invalid,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: invalid,
+        encrypter: null,
+        tokenGenerator: null,
+        updateAccessTokenRepository: invalid
       }),
       new AuthUseCase({
         loadUserByEmailRepository: null,
         encrypter: invalid,
-        tokenGenerator
+        tokenGenerator: invalid,
+        updateAccessTokenRepository: null
       }),
       new AuthUseCase({
-        loadUserByEmailRepository: invalid,
+        loadUserByEmailRepository: null,
         encrypter: invalid,
-        tokenGenerator
+        tokenGenerator: null,
+        updateAccessTokenRepository: invalid
       }),
       new AuthUseCase({
-        loadUserByEmailRepository,
-        encrypter,
-        tokenGenerator: null
-      }),
-      new AuthUseCase({
-        loadUserByEmailRepository,
-        encrypter,
-        tokenGenerator: invalid
+        loadUserByEmailRepository: null,
+        encrypter: null,
+        tokenGenerator: invalid,
+        updateAccessTokenRepository: invalid
       }),
       new AuthUseCase({
         loadUserByEmailRepository,
         encrypter: null,
-        tokenGenerator
+        tokenGenerator: null,
+        updateAccessTokenRepository: null
+
       }),
       new AuthUseCase({
         loadUserByEmailRepository,
         encrypter: invalid,
-        tokenGenerator
+        tokenGenerator: null,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository,
+        encrypter: null,
+        tokenGenerator: invalid,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository,
+        encrypter: null,
+        tokenGenerator: null,
+        updateAccessTokenRepository: invalid
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository,
+        encrypter: invalid,
+        tokenGenerator: invalid,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository,
+        encrypter: null,
+        tokenGenerator: invalid,
+        updateAccessTokenRepository: invalid
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository,
+        encrypter: invalid,
+        tokenGenerator: null,
+        updateAccessTokenRepository: invalid
       }),
       new AuthUseCase({
         loadUserByEmailRepository: null,
         encrypter,
-        tokenGenerator
+        tokenGenerator: null,
+        updateAccessTokenRepository: null
       }),
       new AuthUseCase({
         loadUserByEmailRepository: invalid,
         encrypter,
-        tokenGenerator
+        tokenGenerator: null,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: null,
+        encrypter,
+        tokenGenerator: invalid,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: null,
+        encrypter,
+        tokenGenerator: null,
+        updateAccessTokenRepository: invalid
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: invalid,
+        encrypter,
+        tokenGenerator: invalid,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: invalid,
+        encrypter,
+        tokenGenerator: null,
+        updateAccessTokenRepository: invalid
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: null,
+        encrypter,
+        tokenGenerator: invalid,
+        updateAccessTokenRepository: invalid
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: null,
+        encrypter: null,
+        tokenGenerator,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: invalid,
+        encrypter: null,
+        tokenGenerator,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: null,
+        encrypter: invalid,
+        tokenGenerator,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: null,
+        encrypter: null,
+        tokenGenerator,
+        updateAccessTokenRepository: invalid
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: invalid,
+        encrypter: invalid,
+        tokenGenerator,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: invalid,
+        encrypter: null,
+        tokenGenerator,
+        updateAccessTokenRepository: invalid
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: null,
+        encrypter: invalid,
+        tokenGenerator,
+        updateAccessTokenRepository: invalid
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository,
+        encrypter,
+        tokenGenerator: null,
+        updateAccessTokenRepository
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository,
+        encrypter,
+        tokenGenerator: invalid,
+        updateAccessTokenRepository
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository,
+        encrypter: null,
+        tokenGenerator,
+        updateAccessTokenRepository
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository,
+        encrypter: invalid,
+        tokenGenerator,
+        updateAccessTokenRepository
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: null,
+        encrypter,
+        tokenGenerator,
+        updateAccessTokenRepository
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository: invalid,
+        encrypter,
+        tokenGenerator,
+        updateAccessTokenRepository
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository,
+        encrypter,
+        tokenGenerator,
+        updateAccessTokenRepository: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepository,
+        encrypter,
+        tokenGenerator,
+        updateAccessTokenRepository: invalid
       })
     )
     for (const sut of suts) {
