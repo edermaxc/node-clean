@@ -4,8 +4,9 @@
   "description": "exemplo de node com clean arch",
   "main": "index.js",
   "devDependencies": {
+    "@types/jest": "^28.1.6",
     "husky": "^8.0.1",
-    "jest": "^28.1.1",
+    "jest": "^28.1.3",
     "lint-staged": "^13.0.0",
     "standard": "^17.0.0"
   },
