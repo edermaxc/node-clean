@@ -4,6 +4,7 @@ let client, db
 
 const makeSut = () => {
   const userModel = db.collection('users')
+  console.log('a')
   const sut = new LoadUserByEmailRepository(userModel)
   return { sut, userModel }
 }
