@@ -1,27 +1,11 @@
 const MongoHelper = require('../helpers/mongo-helper')
+const UpdateAccessTokenRepository = require('./update-access-token-repository')
 let db, fakeUserId
 
 const makeSut = () => {
   const userModel = db.collection('users')
   const sut = new UpdateAccessTokenRepository(userModel)
   return { sut, userModel }
-}
-
-class UpdateAccessTokenRepository {
-  constructor (userModel) {
-    this.userModel = userModel
-  }
-
-  async update (userId, accessToken) {
-    return await this.userModel.updateOne(
-      { _id: userId },
-      {
-        $set: {
-          accessToken
-        }
-      }
-    )
-  }
 }
 
 describe('UpdateAccessTokenRepository', () => {
